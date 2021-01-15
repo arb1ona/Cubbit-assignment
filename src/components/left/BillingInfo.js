@@ -184,7 +184,7 @@ export default class BillingInfo extends Component {
     ) : null;
 
     return (
-      <Container className="billing-container">
+      <div className="billing-container">
         <Row className="container-fluid co-title-row mb-4">
           <h4>Billing Information</h4>
         </Row>
@@ -232,7 +232,7 @@ export default class BillingInfo extends Component {
           </FormGroup>
         </ListGroup>
         {content}
-      </Container>
+      </div>
     );
   }
 }
