@@ -75,9 +75,15 @@ p {
 }
 
 //input
+
 .form-control {
   font-family: $font-text;
   font-size: calc(0.7rem + 0.6vw);
+}
+.form-control:focus {
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 
 .navbar-container {
@@ -164,7 +170,11 @@ p {
   //Error
 
   .errorMessage {
-    color: red;
+    color: red !important;
+  }
+
+  input.error {
+    border: 1px solid red;
   }
 
   //credit card input container

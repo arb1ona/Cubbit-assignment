@@ -92,6 +92,7 @@ export default class ContactInfo extends Component {
         <div>
           <FormGroup>
             <Input
+              className={formErrors.email.length > 0 ? "error" : null}
               type="text"
               name="email"
               placeholder="Email"
@@ -104,6 +105,7 @@ export default class ContactInfo extends Component {
           </FormGroup>
           <FormGroup>
             <Input
+              className={formErrors.phone.length > 0 ? "error" : null}
               type="text"
               name="phone"
               placeholder="Phone Number"
@@ -118,6 +120,7 @@ export default class ContactInfo extends Component {
             <Col md={6}>
               <FormGroup>
                 <Input
+                  className={formErrors.firstName.length > 0 ? "error" : null}
                   type="text"
                   name="firstName"
                   placeholder="First name"
@@ -132,6 +135,7 @@ export default class ContactInfo extends Component {
             <Col md={6}>
               <FormGroup>
                 <Input
+                  className={formErrors.lastName.length > 0 ? "error" : null}
                   type="text"
                   name="lastName"
                   placeholder="Last name"
