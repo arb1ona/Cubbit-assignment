@@ -52,8 +52,8 @@ export default class ContactInfo extends Component {
     const { name, value } = event.target;
     let formErrors = this.state.formErrors;
 
-    console.log("Name: ", name);
-    console.log("Value", value);
+    // console.log("Name: ", name);
+    // console.log("Value", value);
 
     //else if
     switch (name) {
@@ -63,13 +63,22 @@ export default class ContactInfo extends Component {
             ? ""
             : "invalid email address";
         break;
-      case "lastName":
+      case "phone":
         formErrors.firstName =
-          value.length < 3 && value.length > 0
-            ? "minimum 3 characters required"
-            : "";
+          value.length < 10 ? "minimum 3 characaters required" : "";
+        break;
+      case "firstName":
+        formErrors.firstName =
+          value.length < 3 ? "minimum 3 characaters required" : "";
+        break;
+      case "lastName":
+        formErrors.lastName =
+          value.length < 3 ? "minimum 3 characaters required" : "";
+        break;
+      default:
         break;
     }
+    this.setState({ formErrors, [name]: value }, () => console.log(this.state));
   };
 
   render() {
@@ -83,7 +92,6 @@ export default class ContactInfo extends Component {
             <Input
               type="text"
               name="email"
-              id="coContactEmail"
               placeholder="Email"
               noValidate
               onChange={this.handleChange}
@@ -93,7 +101,6 @@ export default class ContactInfo extends Component {
             <Input
               type="text"
               name="phone"
-              id="coContactPhone"
               placeholder="Phone Number"
               noValidate
               onChange={this.handleChange}
@@ -104,7 +111,7 @@ export default class ContactInfo extends Component {
               <FormGroup>
                 <Input
                   type="text"
-                  name="first name"
+                  name="firstName"
                   id="coFirstName"
                   placeholder="First name"
                   noValidate
@@ -116,8 +123,7 @@ export default class ContactInfo extends Component {
               <FormGroup>
                 <Input
                   type="text"
-                  name="last name"
-                  id="coLastName"
+                  name="lastName"
                   placeholder="Last name"
                   noValidate
                   onChange={this.handleChange}
