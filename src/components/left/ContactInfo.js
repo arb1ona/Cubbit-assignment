@@ -64,8 +64,7 @@ export default class ContactInfo extends Component {
             : "invalid email address";
         break;
       case "phone":
-        formErrors.firstName =
-          value.length < 10 ? "minimum 3 characaters required" : "";
+        formErrors.phone = value.length < 10 ? "invalid phone number" : "";
         break;
       case "firstName":
         formErrors.firstName =
@@ -82,6 +81,9 @@ export default class ContactInfo extends Component {
   };
 
   render() {
+    //it keeps changing everytime
+    const { formErrors } = this.state;
+
     return (
       <Form onSubmit={this.handleSubmit}>
         <Row className="container-fluid co-title-row">
@@ -96,6 +98,9 @@ export default class ContactInfo extends Component {
               noValidate
               onChange={this.handleChange}
             />
+            {formErrors.email.length > 0 && (
+              <span className="errorMessage">{formErrors.email}</span>
+            )}
           </FormGroup>
           <FormGroup>
             <Input
@@ -105,6 +110,9 @@ export default class ContactInfo extends Component {
               noValidate
               onChange={this.handleChange}
             />
+            {formErrors.phone.length > 10 && (
+              <span className="errorMessage">{formErrors.phone}</span>
+            )}
           </FormGroup>
           <Row form>
             <Col md={6}>
@@ -112,11 +120,13 @@ export default class ContactInfo extends Component {
                 <Input
                   type="text"
                   name="firstName"
-                  id="coFirstName"
                   placeholder="First name"
                   noValidate
                   onChange={this.handleChange}
                 />
+                {formErrors.firstName.length > 0 && (
+                  <span className="errorMessage">{formErrors.firstName}</span>
+                )}
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -128,6 +138,9 @@ export default class ContactInfo extends Component {
                   noValidate
                   onChange={this.handleChange}
                 />
+                {formErrors.lastName.length > 0 && (
+                  <span className="errorMessage">{formErrors.lastName}</span>
+                )}
               </FormGroup>
               <div className="buyNow">
                 <Button color="primary" type="submit">
