@@ -1,16 +1,6 @@
 import React, { Component } from "react";
 import { Form, FormGroup, Input, Row, Col, Button } from "reactstrap";
-
-const emailRegex = RegExp(
-  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-);
-
-const formValid = (formErrors) => {
-  let valid = true;
-
-  Object.values(formErrors).forEach((val) => val.length > 0 && (valid = false));
-  return valid;
-};
+import { emailRegex, formValid } from "../services/inputValidator";
 
 export default class ContactInfo extends Component {
   constructor(props) {
@@ -33,7 +23,7 @@ export default class ContactInfo extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    if (formValid(this.state.formErrors)) {
+    if (formValid(this.state)) {
       console.log(`
       --SUBMITTING--
       Email: ${this.state.email}
@@ -50,7 +40,7 @@ export default class ContactInfo extends Component {
   handleChange = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
-    let formErrors = this.state.formErrors;
+    let formErrors = { ...this.state.formErrors };
 
     // console.log("Name: ", name);
     // console.log("Value", value);
