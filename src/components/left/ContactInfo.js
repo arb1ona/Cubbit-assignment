@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { Form, FormGroup, Input, Row, Col, Button } from "reactstrap";
+import Toggle from "../Toggle";
+import PlusIcon from "../../assets/images/_ionicons_svg_md-add.png";
+import CountryOptions from "./input_options/countryOptions";
 import { emailRegex, formValid } from "../services/inputValidator";
 
 export default class ContactInfo extends Component {
@@ -11,11 +14,20 @@ export default class ContactInfo extends Component {
       phone: null,
       firstName: null,
       lastName: null,
+      address: null,
+      address2: "",
+      postalCode: null,
+      city: null,
+      state: null,
       formErrors: {
         email: "",
         phone: "",
         firstName: "",
         lastName: "",
+        address: "",
+        postalCode: "",
+        city: "",
+        state: "",
       },
     };
   }
@@ -26,11 +38,19 @@ export default class ContactInfo extends Component {
     if (formValid(this.state)) {
       console.log(`
       --SUBMITTING--
+      CONTACT INFO
       Email: ${this.state.email}
       Phone: ${this.state.phone}
       First Name: ${this.state.firstName}
       Last Name: ${this.state.lastName}
-
+      
+      SHIPPING ADDRESS
+      Street address: ${this.state.address}
+      Optional address: ${this.state.address2}
+      PostalCode: ${this.state.postalCode}
+      City: ${this.state.city}
+      State: ${this.state.state}
+  
       `);
     } else {
       console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
@@ -64,6 +84,21 @@ export default class ContactInfo extends Component {
         formErrors.lastName =
           value.length < 3 ? "minimum 3 characaters required" : "";
         break;
+      case "address":
+        formErrors.address =
+          value.length < 3 ? "Street address is required" : "";
+        break;
+      case "postalCode":
+        formErrors.postalCode =
+          value.length < 3 ? "Postal code is required" : "";
+        break;
+      case "city":
+        formErrors.city = value.length < 3 ? "City is required" : "";
+        break;
+      case "state":
+        formErrors.state =
+          value.length < 3 ? "State/Region/Province is required" : "";
+        break;
       default:
         break;
     }
@@ -76,6 +111,8 @@ export default class ContactInfo extends Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
+        {/* --------------------------CONTACT INFORMATION--------------------------------- */}
+
         <Row className="container-fluid co-title-row">
           <h4>Contact Information</h4>
         </Row>
@@ -136,13 +173,112 @@ export default class ContactInfo extends Component {
                   <span className="errorMessage">{formErrors.lastName}</span>
                 )}
               </FormGroup>
-              <div className="buyNow">
-                <Button color="primary" type="submit">
-                  Buy Now
-                </Button>
-              </div>
             </Col>
           </Row>
+        </div>
+        {/* ---------------------CONTACT INFORMATION END--------------------------------------- */}
+
+        {/* ------------------------------------SHIPPING ADDRESS----------------------------------------------------------              */}
+        <Row className="container-fluid co-title-row mb-4">
+          <h4>Shipping Address</h4>
+        </Row>
+        <FormGroup>
+          <Input
+            className={formErrors.address.length > 0 ? "error" : null}
+            type="text"
+            name="address"
+            placeholder="Street Address"
+            noValidate
+            onChange={this.handleChange}
+          />
+          {formErrors.address.length > 0 && (
+            <span className="errorMessage">{formErrors.address}</span>
+          )}
+        </FormGroup>
+        <FormGroup>
+          <Toggle>
+            {({ on, off, toggle }) => (
+              <div className="toggle-container address2-text">
+                {on && (
+                  <Input
+                    type="text"
+                    name="address2"
+                    placeholder="Apartment, entry, etc. (optional)"
+                    onChange={this.handleChange}
+                  />
+                )}
+                {off && (
+                  <div onClick={toggle}>
+                    <p className="p-xs">
+                      <img
+                        className="toggle-ico"
+                        src={PlusIcon}
+                        alt="expand icon"
+                      />{" "}
+                      Add Optional Address
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+          </Toggle>
+        </FormGroup>
+        <Row form>
+          <Col md={6}>
+            <FormGroup>
+              <Input
+                className={formErrors.postalCode.length > 0 ? "error" : null}
+                type="text"
+                name="postalCode"
+                placeholder="Postal Code"
+                onChange={this.handleChange}
+              />
+              {formErrors.postalCode.length > 0 && (
+                <span className="errorMessage">{formErrors.postalCode}</span>
+              )}
+            </FormGroup>
+          </Col>
+          {/* <Col md={6}>
+            <FormGroup className="dropdown-container">
+              <CountryOptions onChange={this.handleChange} />
+            </FormGroup>
+          </Col> */}
+        </Row>
+        <Row form>
+          <Col md={6}>
+            <FormGroup className="dropdown-container">
+              <Input
+                className={formErrors.city.length > 0 ? "error" : null}
+                type="text"
+                name="city"
+                placeholder="City"
+                onChange={this.handleChange}
+              />
+              {formErrors.city.length > 0 && (
+                <span className="errorMessage">{formErrors.city}</span>
+              )}
+            </FormGroup>
+          </Col>
+          <Col md={6}>
+            <FormGroup>
+              <Input
+                className={formErrors.state.length > 0 ? "error" : null}
+                type="text"
+                name="state"
+                placeholder="State/Region/Province"
+                onChange={this.handleChange}
+              />
+              {formErrors.state.length > 0 && (
+                <span className="errorMessage">{formErrors.state}</span>
+              )}
+            </FormGroup>
+          </Col>
+        </Row>
+        {/* ---------------------------END OF SHIPPING ADDRESS------------------------------------------------------------ */}
+        <div className="buyNow">
+          <button disabled={!formValid} color="primary" type="submit">
+            Buy Now
+          </button>
         </div>
       </Form>
     );

@@ -271,6 +271,21 @@ p {
     }
   }
 }
+button {
+  display: block;
+  padding: 10px;
+  min-width: 100px;
+  border-radius: 3px;
+  border: 1px solid blue;
+  background-color: blue;
+  color: white;
+}
+
+button[disabled] {
+  background-color: #cccccc !important;
+  border: 1px solid #999999 !important;
+  color: blue !important;
+}
 
 .footer {
   width: 100%;
