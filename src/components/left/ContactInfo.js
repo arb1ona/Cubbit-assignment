@@ -4,6 +4,7 @@ import Toggle from "../Toggle";
 import PlusIcon from "../../assets/images/_ionicons_svg_md-add.png";
 import CountryOptions from "./input_options/countryOptions";
 import { emailRegex, formValid } from "../services/inputValidator";
+import BillingInfo from "./BillingInfo";
 
 export default class ContactInfo extends Component {
   constructor(props) {
@@ -275,10 +276,18 @@ export default class ContactInfo extends Component {
           </Col>
         </Row>
         {/* ---------------------------END OF SHIPPING ADDRESS------------------------------------------------------------ */}
+        <BillingInfo
+          handleChange={this.handleChange}
+          address={this.state.address}
+          city={this.state.city}
+          state={this.state.state}
+          postalCode={this.state.postalCode}
+        />
+
         <div className="buyNow">
-          <button disabled={!formValid} color="primary" type="submit">
+          <Button disabled={!formValid} color="primary" type="submit">
             Buy Now
-          </button>
+          </Button>
         </div>
       </Form>
     );
